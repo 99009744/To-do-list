@@ -18,6 +18,14 @@
         $conn = null;
         return $results;
     }
+    function get_lists_names(){
+        $conn = connect();
+        $sql = $conn->prepare("SELECT listname FROM lijst");
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+        return $results;
+    }
     function get_tasks(){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM taken");
@@ -35,9 +43,23 @@
     }
     function newList($name_task){
         $conn = connect();
-        $insert = $conn->prepare("INSERT INTO `lijst` (`listname`) VALUES (:name)");
-        $insert->bindParam(':name', $name_task);
-        $insert->execute();
+        $sql = $conn->prepare("INSERT INTO `lijst` (`listname`) VALUES (:name)");
+        $sql->bindParam(':name', $name_task);
+        $sql->execute();
+        $conn = null;
+    }
+    function sort_tasks_time(){
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM taken order by time;");
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+    }
+    function delete_list($delete_list){
+        $conn = connect();
+        $sql = $conn->prepare("DELETE FROM `lijst` WHERE listname = :listname");
+        $sql->bindParam(':listname', $delete_list);
+        $sql->execute();
         $conn = null;
     }
     ?>

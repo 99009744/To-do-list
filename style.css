@@ -42,16 +42,43 @@ a{
     color: red;
     font-family: 'Lacquer', sans-serif;
 }
+
+/* Option bar items */
 #optionsbar{
     width: 1500px;
     border-bottom: red solid 2px;
     margin: 0 auto;
+    display: grid;
+    grid-template-columns: 500px 500px 500px;
 }
+#new_list{
+    grid-column: 1/2;
+    text-align: center;
+}
+#remove_list{
+    grid-column: 2/3;
+    text-align: center;
+}
+#sort_taks{
+    grid-column: 3/4;
+    text-align: center;
+}
+#time_name{
+    display: inline-block;
+}
+#time_button{
+    background-color: black;
+    border: none;
+    color: red;
+}
+
+/* lists */
 .lists{
     width: 400px;
     height: 700px;
     border: red solid 2px;
     margin: 20px;
+    display: inline-block;
 }
 .list_title{
     width: 400px;
@@ -65,15 +92,12 @@ a{
     height: 600px;
     border-top: red solid 2px;
 }
+
 .task{
     width: 400px;
     height: 150px;
     border: red solid 1px;
     overflow-y: auto;
-}
-#form{
-    width: 500px;
-    margin: 50px auto;
 }
 #footer{
     width: 1500px;
