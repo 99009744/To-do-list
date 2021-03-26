@@ -1,9 +1,29 @@
 <?php
     include_once("functions.php");
-    $name_task = $_POST['name'];
+    
+    /*
+    Posts for lists
+    */
     $delete_list = $_POST['delete_name_list'];
+    $name_list = $_POST['name_list'];
+    /* 
+    Posts fot tasks
+    */
+    $name_task = $_POST['name_task'];
+    $time_task = $_POST['time_task'];
+    $info_task = $_POST['info_task'];
+    $listid = $_POST['listid'];
+    $taskid = $_POST['taskid'];
+    $move_task_to_list = $_POST['movetolist'];
     if($name_task != NULL){
-        newList($name_task);
+        create_new_task($name_task,$time_task,$info_task,$listid);
+        $_SESSION['postdata'] = $_POST;
+        unset($_POST);
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
+    }
+    if($name_list != NULL){
+        create_new_list($name_list);
         $_SESSION['postdata'] = $_POST;
         unset($_POST);
         header("Location: ".$_SERVER['PHP_SELF']);
@@ -16,12 +36,19 @@
         header("Location: ".$_SERVER['PHP_SELF']);
         exit;
     }
+    if($move_task_to_list != NULL){
+        move_task($move_task_to_list,$taskid);
+        $_SESSION['postdata'] = $_POST;
+        unset($_POST);
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
+    }
     
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Document</title>
+    <title>To do list</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Lacquer&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
@@ -50,17 +77,21 @@
                 <div class="list_title">
                     <h3><?= $list['listname']?></h3>
                     <div class="lists_items">
-                        <a id="new_task" href="newtask.php">Add new task<i class="fas fa-plus"></i></a>
-                        
-                    </div>
+                        <a id="new_task" href="newtask.php?id=<?= $list['id']?>">Add new task<i class="fas fa-plus"></i></a>
+                    
                     <? $result_tasks = get_tasks();
-                    foreach($result_tasks as $task){ ?>
-                        <div class="task">
-                            <p>Name = <?= $task['name'] ?></p>
-                            <p>Time H/M/S =<?=$task['time'] ?></p>
-                            <p>Info =<?= $task['info'] ?></p>
+                    foreach($result_tasks as $task){ 
+                        if($task['listid'] == $list['id']){?>
+                            <div class="task">
+                                <p>Name = <?= $task['name'] ?></p>
+                                <p>Time H/M/S = <?=$task['time'] ?></p>
+                                <p>Info = <?= $task['info'] ?></p>
+                                <a id='remove_list' href='removetask.php?taskid=<?= $task['id']?>'><i class="far fa-trash-alt"></i></a>
+                                <a id='move_task' href='movetask.php?taskid=<?= $task['id']?>'><i class="fas fa-arrows-alt-h"></i></a>
                         </div>
-                    <? } ?>
+                        <? }
+                    } ?>
+                    </div>
                 </div>
             </div>
         <? } ?>

@@ -1,6 +1,6 @@
 <?php
 include_once("functions.php");
-    $all_list_names = get_lists_names();
+    $all_list_names = get_lists();
 ?><!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,8 +17,8 @@ include_once("functions.php");
             <p>Select list based on name:</p>
             <select name="delete_name_list">
         <?
-            foreach($all_list_names as $listname){ ?>
-                <option value="<?= $listname['listname'] ?>"><?= $listname['listname'] ?></option>
+            foreach($all_list_names as $listname){ ?>   
+                <option value="<?= $listname['id'] ?>"><?= $listname['listname'] ?></option>
             <?}
         ?> 
         <input type="submit" value="Submit" />

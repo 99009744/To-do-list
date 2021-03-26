@@ -11,9 +11,10 @@
     <div id="container_new_list">
         <a href="index.php"><i class="fas fa-arrow-left">Back</i></a>
         <form method="post" action="index.php" id="form">
-            Name: <input name="name" type="text" placeholder="name" required/><br>
-            Time: <input id='time' type="time" placeholder="name" required/></br>
-            Info: <textarea id='info' type="text" placeholder="info" required></textarea><br>
+            Name: <input name="name_task" type="text" placeholder="name" required/><br>
+            Time: <input name='time_task' type="time" placeholder="name" required/></br>
+            Info: <textarea name='info_task' type="text" placeholder="info" required></textarea><br>
+            <input name="listid" type="hidden" value="<?=$_GET['id']?>" required>
             <input type="submit" value="Submit" /> 
         </form>           
     </div>

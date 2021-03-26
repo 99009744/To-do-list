@@ -1,7 +1,10 @@
-<!DOCTYPE html>
+<?php
+include_once("functions.php");
+    $task_id = $_GET['taskid'];
+?><!DOCTYPE html>
 <html lang="en">
 <head>
-<title>New List</title>
+<title>Remove list</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Lacquer&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
@@ -10,10 +13,8 @@
 <body>
     <div id="container_new_list">
         <a href="index.php"><i class="fas fa-arrow-left">Back</i></a>
-        <form method="post" action="index.php" id="form">
-            Name: <input name="name_list" type="text" placeholder="name" required/><br>
-            <input type="submit" value="Submit" /> 
-        </form>           
+        <p>Do you want to delete this task?</p>
+    <button id="delete_task" onclick="delete_task(<?= $task_id ?>)">YES</button>
     </div>
 </body>
 </html>

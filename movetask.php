@@ -1,7 +1,13 @@
+<?php
+    include_once("functions.php");
+    $task_id = $_GET['taskid'];
+    $lists = get_lists();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<title>New List</title>
+<title>New Task</title>
     <link rel="stylesheet" type="text/css" href="style.css">
     <link href="https://fonts.googleapis.com/css?family=Lacquer&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Orbitron&display=swap" rel="stylesheet">
@@ -11,8 +17,13 @@
     <div id="container_new_list">
         <a href="index.php"><i class="fas fa-arrow-left">Back</i></a>
         <form method="post" action="index.php" id="form">
-            Name: <input name="name_list" type="text" placeholder="name" required/><br>
-            <input type="submit" value="Submit" /> 
+            <p>Select to wich list you want to move:</p>
+            <select name="movetolist">
+            <? foreach($lists as $list){?>
+                <option value="<?= $list['id'] ?>"><?= $list['listname'] ?></option>
+            <? }?>
+            <input name="taskid" type="hidden" value="<?= $task_id?>" />
+            <input type="submit" value="Submit" />
         </form>           
     </div>
 </body>
