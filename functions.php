@@ -29,8 +29,6 @@
         $conn = null;
         return $results;
     }
-    
-    
     function get_tasks(){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM taken");
@@ -70,14 +68,33 @@
     }
     function get_status_name_by_id($id){
             $conn = connect();
-            $sql = $conn->prepare("SELECT `name` FROM status where id = :id");
+            $sql = $conn->prepare("SELECT * FROM status where id = :id");
             $sql->bindParam(':id', $id);
             $sql->execute();
             $id = $sql->fetchAll();
             $conn = null;
             return $id;
-        }
-
+    }
+    function get_tasks_by_id($id){
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM taken where id = :id");
+        $sql->bindParam(':id', $id);
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+        return $results;
+    }
+    function get_tasks_sorted_by_listid($status_select){
+            $conn = connect();
+            $sql = $conn->prepare("SELECT * FROM taken where statusid = :id");
+            $sql->bindParam(':id', $status_select);
+            $sql->execute();
+            $results = $sql->fetchAll();
+            $conn = null;
+            unset($_POST);
+            return $results;
+            
+    }
     /*
         Every function with insert
     */
@@ -135,17 +152,14 @@
         $sql->execute();
         $conn = null;
     }
-    function update_task($update_name_task,$update_time_task,$update_info_task,$update_task_status){
+    function update_task($update_name_task,$update_time_task,$update_info_task,$update_task_status,$update_list_id){
         $conn = connect();
-        $sql = $conn->prepare("UPDATE `taken` 
-        set `name` = :name,
-        `info` = :info,
-        `time` = :time,
-        `statusid` = :statusid");
+        $sql = $conn->prepare("UPDATE `taken` set `name` = :name,`info` = :info,`time` = :time,`statusid` = :statusid where id = :id");
         $sql->bindParam(':name', $update_name_task);
         $sql->bindParam(':time', $update_time_task);
         $sql->bindParam(':info', $update_info_task);
         $sql->bindParam(':statusid', $update_task_status);
+        $sql->bindParam(':id', $update_list_id);
         $sql->execute();
         $conn = null;
     }

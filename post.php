@@ -7,7 +7,7 @@
     $update_list_name = $_POST['update_name_list'];
     $list_id = $_POST['listid'];
     /* 
-    Posts fot tasks
+    Posts for tasks
     */
     $name_task = $_POST['name_task'];
     $time_task = $_POST['time_task'];
@@ -16,10 +16,16 @@
     $update_name_task = $_POST['update_name_task'];
     $update_time_task = $_POST['update_time_task'];
     $update_info_task = $_POST['update_info_task'];
+    $update_list_id = $_POST['update_list_id'];
     $update_task_status = $_POST['update_task_status'];
     $listid = $_POST['listid'];
     $taskid = $_POST['taskid'];
     $move_task_to_list = $_POST['movetolist'];
+    /*
+        Posts for status
+    */
+    $status_select = $_POST['status_select'];
+
     if($name_task != NULL){
         create_new_task($name_task,$time_task,$info_task,$listid,$task_status);
         remove_post();
@@ -41,7 +47,7 @@
         remove_post();
     }
     if($update_name_task != NULL){
-        update_task($update_name_task, $update_time_task, $update_info_task, $update_task_status);
+        update_task($update_name_task, $update_time_task, $update_info_task, $update_task_status,$update_list_id);
         remove_post();
     }
 ?>

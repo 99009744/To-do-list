@@ -1,6 +1,7 @@
 <?php
     include_once("functions.php");
-    include_once("post.php");   
+    include_once("post.php");    
+    $get_all_status = get_status();    
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,7 +25,19 @@
             <div id="sort_taks">
                 <p id="time_name">Sort time:</p> 
                 <button id="time_button" onclick="sort_tasks_time()"><i class="fas fa-arrows-alt-v"></i></button>
-                
+            </div>
+            <div id="sort_status">
+                <form method="post" action="<?=$_SERVER['PHP_SELF']?>" id="form">
+                    Status:<select name="status_select">
+                        <option value="0"> All </option>
+                        <?  
+                            foreach($get_all_status as $change_status){
+                        ?>
+                        <option value="<?= $change_status['id'] ?>"><?= $change_status['name'] ?></option>
+                        
+                    <? }?>
+                    <input id="select_status_btn" type="submit" value="Submit" />
+                </form>
             </div>
         </div>
         <?
@@ -35,9 +48,18 @@
                     <h3><?= $list['listname']?> <a class='edit_list' href='editlist.php?listid=<?= $list['id']?>'><i class="fas fa-edit"></i></a></h3>
                     <div class="lists_items">
                         <a id="new_task" href="newtask.php?id=<?= $list['id']?>">Add new task<i class="fas fa-plus"></i></a>
-                    
                     <? 
-                    $result_tasks = get_tasks(); 
+                    if ($status_select != NULL){        // Helps me to check on status of task with the value from a _POST
+                        if($status_select == 0 ){       // If its 0 show all tasks
+                            $result_tasks = get_tasks();
+                        }
+                        else{                           // If value is not NULL or 0 use the function to show tasks with a specific status    
+                        $result_tasks =  get_tasks_sorted_by_listid($status_select);
+                        }
+                    }
+                    else{
+                        $result_tasks = get_tasks();
+                    }
                     foreach($result_tasks as $task){
                         $task_id = $task['statusid'];
                         $id = get_status_name_by_id($task_id);

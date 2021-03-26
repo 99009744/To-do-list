@@ -25,7 +25,7 @@
                     foreach($get_all_status as $status){?>
                     <option value="<?= $status['id'] ?>"><?= $status['name'] ?></option>
                 <? }?>
-            <input name="listid" type="hidden" value="<?=$_GET['id']?>" required><br>
+            <input name="update_list_id" type="hidden" value="<?= $task_id ?>" required><br>
             <input type="submit" value="Submit" /> 
         </form>           
     </div>
