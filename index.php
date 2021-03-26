@@ -14,11 +14,12 @@
     $name_task = $_POST['name_task'];
     $time_task = $_POST['time_task'];
     $info_task = $_POST['info_task'];
+    $task_status = $_POST['task_status'];
     $listid = $_POST['listid'];
     $taskid = $_POST['taskid'];
     $move_task_to_list = $_POST['movetolist'];
     if($name_task != NULL){
-        create_new_task($name_task,$time_task,$info_task,$listid);
+        create_new_task($name_task,$time_task,$info_task,$listid,$task_status);
         $_SESSION['postdata'] = $_POST;
         unset($_POST);
         header("Location: ".$_SERVER['PHP_SELF']);
@@ -84,16 +85,20 @@
         foreach($result_lists as $list){?>
             <div class="lists">
                 <div class="list_title">
-                    <h3><?= $list['listname']?> <a id='edit_list' href='editlist.php?listid=<?= $list['id']?>'><i class="fas fa-edit"></i></a></h3>
+                    <h3><?= $list['listname']?> <a class='edit_list' href='editlist.php?listid=<?= $list['id']?>'><i class="fas fa-edit"></i></a></h3>
                     <div class="lists_items">
                         <a id="new_task" href="newtask.php?id=<?= $list['id']?>">Add new task<i class="fas fa-plus"></i></a>
                     
-                    <? $result_tasks = get_tasks();
-                    foreach($result_tasks as $task){ 
+                    <? 
+                    $result_tasks = get_tasks(); 
+                    foreach($result_tasks as $task){
+                        $task_id = $task['statusid'];
+                        $id = get_status_name_by_id($task_id);
                         if($task['listid'] == $list['id']){?>
                             <div class="task">
                                 <p>Name = <?= $task['name'] ?></p>
-                                <p>Time H/M/S = <?=$task['time'] ?></p>
+                                <p>Time in min = <?=$task['time'] ?></p>
+                                <p>Status = <?= $id[0]['name'] ?></p>
                                 <p>Info = <?= $task['info'] ?></p>
                                 <a id='edit_task' href='edittask.php?taskid=<?= $task['id']?>'><i class="fas fa-edit"></i></a>
                                 <a id='move_task' href='movetask.php?taskid=<?= $task['id']?>'><i class="fas fa-arrows-alt-h"></i></a>

@@ -21,6 +21,7 @@ a{
     font-family: 'Orbitron', sans-serif;
     color: red;
     overflow-x: auto;
+    position: relative;
 }
 #container_new_list{
     width: 800px;

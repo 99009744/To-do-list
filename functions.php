@@ -10,6 +10,9 @@
                     // echo "Connected successfully";
             return $conn;
     }
+    /*
+        Every function select
+    */
     function get_lists(){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM lijst");
@@ -26,6 +29,28 @@
         $conn = null;
         return $results;
     }
+    
+    
+    function get_tasks(){
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM taken");
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+        return $results;
+    }
+    function get_status(){
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM status");
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+        return $results;
+    }
+    
+    /*
+        Every function select by value
+    */
     function get_lists_where_id_is_id($task_id){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM taken WHERE id = :id");
@@ -35,31 +60,6 @@
         $conn = null;
         return $results;
     }
-    function get_tasks(){
-        $conn = connect();
-        $sql = $conn->prepare("SELECT * FROM taken");
-        $sql->execute();
-        $results = $sql->fetchAll();
-        $conn = null;
-        return $results;
-    }
-    function create_new_list($name_list){
-        $conn = connect();
-        $sql = $conn->prepare("INSERT INTO `lijst` (`listname`) VALUES (:name)");
-        $sql->bindParam(':name', $name_list);
-        $sql->execute();
-        $conn = null;
-    }
-    function create_new_task($name_task,$time_task,$info_task,$listid){
-        $conn = connect();
-        $sql = $conn->prepare("INSERT INTO `taken` (`name`,`info`,`time`,`listid`) VALUES (:name,:info,:time,:listid)");
-        $sql->bindParam(':name', $name_task);
-        $sql->bindParam(':time', $time_task);
-        $sql->bindParam(':info', $info_task);
-        $sql->bindParam(':listid', $listid);
-        $sql->execute();
-        $conn = null;
-    }
     function sort_tasks_time(){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM taken order by time;");
@@ -67,6 +67,40 @@
         $results = $sql->fetchAll();
         $conn = null;
     }
+    function get_status_name_by_id($id){
+            $conn = connect();
+            $sql = $conn->prepare("SELECT `name` FROM status where id = :id");
+            $sql->bindParam(':id', $id);
+            $sql->execute();
+            $id = $sql->fetchAll();
+            $conn = null;
+            return $id;
+        }
+
+    /*
+        Every function with insert
+    */
+    function create_new_list($name_list){
+        $conn = connect();
+        $sql = $conn->prepare("INSERT INTO `lijst` (`listname`) VALUES (:name)");
+        $sql->bindParam(':name', $name_list);
+        $sql->execute();
+        $conn = null;
+    }
+    function create_new_task($name_task,$time_task,$info_task,$listid,$task_status){
+        $conn = connect();
+        $sql = $conn->prepare("INSERT INTO `taken` (`name`,`info`,`time`,`listid`,`statusid`) VALUES (:name,:info,:time,:listid,:status)");
+        $sql->bindParam(':name', $name_task);
+        $sql->bindParam(':time', $time_task);
+        $sql->bindParam(':info', $info_task);
+        $sql->bindParam(':listid', $listid);
+        $sql->bindParam(':status', $task_status);
+        $sql->execute();
+        $conn = null;
+    }
+    /*
+        Every function with delete
+    */
     function delete_list($delete_list){
         $conn = connect();
         $sql = $conn->prepare("DELETE FROM `lijst` WHERE id = :listid");
@@ -81,6 +115,9 @@
         $sql->execute();
         $conn = null;
     }
+    /*
+        Every function with update
+    */
     function move_task($move_task_to_list,$taskid){
         $conn = connect();
         $sql = $conn->prepare("UPDATE `taken` set `listid` = :listid WHERE id = :taskid"); 

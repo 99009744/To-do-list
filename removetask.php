@@ -14,7 +14,8 @@ include_once("functions.php");
     <div id="container_new_list">
         <a href="index.php"><i class="fas fa-arrow-left">Back</i></a>
         <p>Do you want to delete this task?</p>
-    <button id="delete_task" onclick="delete_task(<?= $task_id ?>)">YES</button>
+        <a href="index.php">No</a>
+        <a href="delete.php?id=<?= $task_id ?>">Yes</a>
     </div>
 </body>
 </html>
