@@ -1,59 +1,6 @@
 <?php
     include_once("functions.php");
-    
-    /*
-    Posts for lists
-    */
-    $delete_list = $_POST['delete_name_list'];
-    $name_list = $_POST['name_list'];
-    $update_list_name = $_POST['update_name_list'];
-    $list_id = $_POST['listid'];
-    /* 
-    Posts fot tasks
-    */
-    $name_task = $_POST['name_task'];
-    $time_task = $_POST['time_task'];
-    $info_task = $_POST['info_task'];
-    $task_status = $_POST['task_status'];
-    $listid = $_POST['listid'];
-    $taskid = $_POST['taskid'];
-    $move_task_to_list = $_POST['movetolist'];
-    if($name_task != NULL){
-        create_new_task($name_task,$time_task,$info_task,$listid,$task_status);
-        $_SESSION['postdata'] = $_POST;
-        unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit;
-    }
-    if($name_list != NULL){
-        create_new_list($name_list);
-        $_SESSION['postdata'] = $_POST;
-        unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit;
-    }
-    if($delete_list != NULL){
-        delete_list($delete_list);
-        $_SESSION['postdata'] = $_POST;
-        unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit;
-    }
-    if($move_task_to_list != NULL){
-        move_task($move_task_to_list,$taskid);
-        $_SESSION['postdata'] = $_POST;
-        unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit;
-    }
-    if ($update_list_name != NULL){
-        change_list_name($update_list_name,$list_id);
-        $_SESSION['postdata'] = $_POST;
-        unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit;
-    }
-    
+    include_once("post.php");   
 ?>
 <!DOCTYPE html>
 <html lang="en">

@@ -51,7 +51,7 @@
     /*
         Every function select by value
     */
-    function get_lists_where_id_is_id($task_id){
+    function get_task_where_id_is_id($task_id){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM taken WHERE id = :id");
         $sql->bindParam(':id', $task_id);
@@ -66,6 +66,7 @@
         $sql->execute();
         $results = $sql->fetchAll();
         $conn = null;
+        header("Location: ".$_SERVER['PHP_SELF']);
     }
     function get_status_name_by_id($id){
             $conn = connect();
@@ -133,5 +134,25 @@
         $sql->bindParam(':id', $list_id);
         $sql->execute();
         $conn = null;
+    }
+    function update_task($update_name_task,$update_time_task,$update_info_task,$update_task_status){
+        $conn = connect();
+        $sql = $conn->prepare("UPDATE `taken` 
+        set `name` = :name,
+        `info` = :info,
+        `time` = :time,
+        `statusid` = :statusid");
+        $sql->bindParam(':name', $update_name_task);
+        $sql->bindParam(':time', $update_time_task);
+        $sql->bindParam(':info', $update_info_task);
+        $sql->bindParam(':statusid', $update_task_status);
+        $sql->execute();
+        $conn = null;
+    }
+    function remove_post(){
+        $_SESSION['postdata'] = $_POST;
+        unset($_POST);
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
     }
     ?>
