@@ -6,6 +6,8 @@
     */
     $delete_list = $_POST['delete_name_list'];
     $name_list = $_POST['name_list'];
+    $update_list_name = $_POST['update_name_list'];
+    $list_id = $_POST['listid'];
     /* 
     Posts fot tasks
     */
@@ -43,6 +45,13 @@
         header("Location: ".$_SERVER['PHP_SELF']);
         exit;
     }
+    if ($update_list_name != NULL){
+        change_list_name($update_list_name,$list_id);
+        $_SESSION['postdata'] = $_POST;
+        unset($_POST);
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
+    }
     
 ?>
 <!DOCTYPE html>
@@ -75,7 +84,7 @@
         foreach($result_lists as $list){?>
             <div class="lists">
                 <div class="list_title">
-                    <h3><?= $list['listname']?></h3>
+                    <h3><?= $list['listname']?> <a id='edit_list' href='editlist.php?listid=<?= $list['id']?>'><i class="fas fa-edit"></i></a></h3>
                     <div class="lists_items">
                         <a id="new_task" href="newtask.php?id=<?= $list['id']?>">Add new task<i class="fas fa-plus"></i></a>
                     
@@ -86,8 +95,9 @@
                                 <p>Name = <?= $task['name'] ?></p>
                                 <p>Time H/M/S = <?=$task['time'] ?></p>
                                 <p>Info = <?= $task['info'] ?></p>
-                                <a id='remove_list' href='removetask.php?taskid=<?= $task['id']?>'><i class="far fa-trash-alt"></i></a>
+                                <a id='edit_task' href='edittask.php?taskid=<?= $task['id']?>'><i class="fas fa-edit"></i></a>
                                 <a id='move_task' href='movetask.php?taskid=<?= $task['id']?>'><i class="fas fa-arrows-alt-h"></i></a>
+                                <a id='remove_list' href='removetask.php?taskid=<?= $task['id']?>'><i class="far fa-trash-alt"></i></a>
                         </div>
                         <? }
                     } ?>

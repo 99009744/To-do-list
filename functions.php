@@ -89,4 +89,12 @@
         $sql->execute();
         $conn = null;
     }
+    function change_list_name($update_list_name,$list_id){
+        $conn = connect();
+        $sql = $conn->prepare("UPDATE `lijst` set `listname` = :name WHERE id = :id"); 
+        $sql->bindParam(':name', $update_list_name);
+        $sql->bindParam(':id', $list_id);
+        $sql->execute();
+        $conn = null;
+    }
     ?>
