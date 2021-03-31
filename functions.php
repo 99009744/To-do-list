@@ -58,22 +58,30 @@
         $conn = null;
         return $results;
     }
-    function sort_tasks_time(){
+    function sort_tasks_time_asc(){
         $conn = connect();
-        $sql = $conn->prepare("SELECT * FROM taken order by time;");
+        $sql = $conn->prepare("SELECT * FROM taken ORDER BY `time` ASC");
         $sql->execute();
         $results = $sql->fetchAll();
         $conn = null;
-        header("Location: ".$_SERVER['PHP_SELF']);
+       return $results;
+    }
+    function sort_tasks_time_desc(){
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM taken ORDER BY `time` DESC");
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+       return $results;
     }
     function get_status_name_by_id($id){
-            $conn = connect();
-            $sql = $conn->prepare("SELECT * FROM status where id = :id");
-            $sql->bindParam(':id', $id);
-            $sql->execute();
-            $id = $sql->fetchAll();
-            $conn = null;
-            return $id;
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM status where id = :id");
+        $sql->bindParam(':id', $id);
+        $sql->execute();
+        $id = $sql->fetchAll();
+        $conn = null;
+        return $id;
     }
     function get_tasks_by_id($id){
         $conn = connect();
@@ -85,14 +93,14 @@
         return $results;
     }
     function get_tasks_sorted_by_listid($status_select){
-            $conn = connect();
-            $sql = $conn->prepare("SELECT * FROM taken where statusid = :id");
-            $sql->bindParam(':id', $status_select);
-            $sql->execute();
-            $results = $sql->fetchAll();
-            $conn = null;
-            unset($_POST);
-            return $results;
+        $conn = connect();
+        $sql = $conn->prepare("SELECT * FROM taken where statusid = :id");
+        $sql->bindParam(':id', $status_select);
+        $sql->execute();
+        $results = $sql->fetchAll();
+        $conn = null;
+        unset($_POST);
+        return $results;
             
     }
     /*
@@ -163,6 +171,10 @@
         $sql->execute();
         $conn = null;
     }
+
+    /*
+        Every other function
+    */
     function remove_post(){
         $_SESSION['postdata'] = $_POST;
         unset($_POST);

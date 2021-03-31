@@ -21,6 +21,7 @@
     $listid = $_POST['listid'];
     $taskid = $_POST['taskid'];
     $move_task_to_list = $_POST['movetolist'];
+    $sort_time = $_POST['sort_time'];
     /*
         Posts for status
     */
@@ -49,5 +50,18 @@
     if($update_name_task != NULL){
         update_task($update_name_task, $update_time_task, $update_info_task, $update_task_status,$update_list_id);
         remove_post();
+    }
+    if($sort_time != NULL){
+        if ($sort_time == 0){
+            $sort_value = 1;
+        }
+        elseif ($sort_time == 1){
+            $sort_value = 2;
+            
+        }
+        elseif ($sort_time == 2){
+            $sort_value = 0;
+        }
+
     }
 ?>

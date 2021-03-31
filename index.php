@@ -1,7 +1,9 @@
-<?php
+<?php 
+    $sort_value = 0;
     include_once("functions.php");
     include_once("post.php");    
-    $get_all_status = get_status();    
+    $get_all_status = get_status();
+   
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -23,8 +25,9 @@
             <a id='new_list' href='newlist.php'>Add new list <i class="fas fa-plus"></i></a>
             <a id='remove_list' href='removelist.php'>Remove a list <i class="far fa-trash-alt"></i></a>
             <div id="sort_taks">
-                <p id="time_name">Sort time:</p> 
-                <button id="time_button" onclick="sort_tasks_time()"><i class="fas fa-arrows-alt-v"></i></button>
+                <form method="post" action="<?=$_SERVER['PHP_SELF']?>" id="form">
+                    Soort time: <button type="submit" name="sort_time" value="<?= $sort_value; ?>"><i class="fas fa-arrows-alt-v"></i></button>
+                </form>
             </div>
             <div id="sort_status">
                 <form method="post" action="<?=$_SERVER['PHP_SELF']?>" id="form">
@@ -58,7 +61,15 @@
                         }
                     }
                     else{
-                        $result_tasks = get_tasks();
+                        if ($sort_value == 0){
+                            $result_tasks = get_tasks();
+                        }
+                        elseif ($sort_value == 1){
+                            $result_tasks = sort_tasks_time_asc();
+                        }
+                        elseif ($sort_value == 2){
+                            $result_tasks = sort_tasks_time_desc();
+                        }
                     }
                     foreach($result_tasks as $task){
                         $task_id = $task['statusid'];
