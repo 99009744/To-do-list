@@ -13,6 +13,7 @@
     /*
         Every function select
     */
+
     function get_lists(){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM lijst");
@@ -134,6 +135,14 @@
         $conn = connect();
         $sql = $conn->prepare("DELETE FROM `lijst` WHERE id = :listid");
         $sql->bindParam(':listid', $delete_list);
+        $sql->execute();
+        $conn = null;
+        delete_task_from_list($delete_list);
+    }
+    function delete_task_from_list($list_id){
+        $conn = connect();
+        $sql = $conn->prepare("DELETE FROM `taken` WHERE listid = :listid");
+        $sql->bindParam(':listid', $list_id);
         $sql->execute();
         $conn = null;
     }
