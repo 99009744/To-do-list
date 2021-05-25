@@ -107,6 +107,20 @@ a{
     border: red solid 1px;
     color: red;
 }
+#sort_time_btn{
+    background-color: black;
+    color: red;
+    border: 1px red solid;
+}
+#sort_time_btn:hover{
+    background-color: red;
+    color: black;
+    border: 1px red solid;
+}
+#select_status{
+    background-color: black;
+    color: red;
+}
 #footer{
     width: 1500px;
     background-color: black;

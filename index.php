@@ -26,12 +26,12 @@
             <a id='remove_list' href='removelist.php'>Remove a list <i class="far fa-trash-alt"></i></a>
             <div id="sort_taks">
                 <form method="post" action="<?=$_SERVER['PHP_SELF']?>" id="form">
-                    Soort time: <button type="submit" name="sort_time" value="<?= $sort_value; ?>"><i class="fas fa-arrows-alt-v"></i></button>
+                    Sort time: <button id="sort_time_btn" type="submit" name="sort_time" value="<?= $sort_value; ?>"><i class="fas fa-arrows-alt-v"></i></button>
                 </form>
             </div>
             <div id="sort_status">
                 <form method="post" action="<?=$_SERVER['PHP_SELF']?>" id="form">
-                    Status:<select name="status_select">
+                    Status:<select name="status_select" id="select_status">
                         <option value="0"> All </option>
                         <?  
                             foreach($get_all_status as $change_status){

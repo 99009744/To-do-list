@@ -46,9 +46,10 @@
         return $results;
     }
     
-    /*
-        Every function select by value
-    */
+    /**
+     * Every function select by value
+     * @param {int} id task/status
+     */
     function get_task_where_id_is_id($task_id){
         $conn = connect();
         $sql = $conn->prepare("SELECT * FROM taken WHERE id = :id");
@@ -103,9 +104,11 @@
         return $results;
             
     }
-    /*
-        Every function with insert
-    */
+    /**
+     * Every function with insert
+     * @param {string} _POST 
+     */
+    
     function create_new_list($name_list){
         $conn = connect();
         $sql = $conn->prepare("INSERT INTO `lijst` (`listname`) VALUES (:name)");
