@@ -183,14 +183,4 @@
         $sql->execute();
         $conn = null;
     }
-
-    /*
-        Every other function
-    */
-    function remove_post(){
-        $_SESSION['postdata'] = $_POST;
-        unset($_POST);
-        header("Location: ".$_SERVER['PHP_SELF']);
-        exit;
-    }
     ?>

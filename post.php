@@ -25,8 +25,16 @@
     /*
         Posts for status
     */
+
     $status_select = $_POST['status_select'];
 
+    function remove_post(){
+        $_SESSION['postdata'] = $_POST;
+        unset($_POST);
+        header("Location: ".$_SERVER['PHP_SELF']);
+        exit;
+    }
+    
     if($name_task != NULL){
         create_new_task($name_task,$time_task,$info_task,$listid,$task_status);
         remove_post();
